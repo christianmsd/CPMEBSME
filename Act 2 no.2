@@ -37,16 +37,16 @@ int main() {
     double d13 = (x1 - x3)*(x1 - x3) + (y1 - y3)*(y1 - y3);
 
     if ((d12 >= d23) && (d12 >= d13)) {  
-        mx = (x1 + x2 + x3 - x1 - x2);  
-        my = (y1 + y2 + y3 - y1 - y2);  
+        mx = (x3);  
+        my = (y3);  
     }
     else if ((d23 >= d12) && (d23 >= d13)) { 
-        mx = (x1 + x2 + x3 - x2 - x3); 
-        my = (y1 + y2 + y3 - y2 - y3); 
+        mx = (x1); 
+        my = (y1); 
     }
     else { // 1 and 3 farthest
-        mx = (x1 + x2 + x3 - x1 - x3); 
-        my = (y1 + y2 + y3 - y1 - y3); 
+        mx = (x2); 
+        my = (y2); 
     }
 
     cout << "MIDDLE PT: (" << mx << "," << my << ")\n";
