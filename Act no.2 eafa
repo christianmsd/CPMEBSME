@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    double x1, y1, x2, y2, x3, y3;
+
+    cout << "X1: "; cin >> x1;
+    cout << "Y1: "; cin >> y1;
+    cout << "X2: "; cin >> x2;
+    cout << "Y2: "; cin >> y2;
+    cout << "X3: "; cin >> x3;
+    cout << "Y3: "; cin >> y3;
+
+    if ((x1 == x2 && y1 == y2) && (x2 == x3 && y2 == y3)) {
+        cout << "COLLINEAR\n";
+        cout << "THREE POINTS COINCIDED\n";
+        return 0;
+    }
+
+    if ((x1 == x2 && y1 == y2) || (x2 == x3 && y2 == y3) || (x1 == x3 && y1 == y3)) {
+        cout << "COLLINEAR\n";
+        cout << "TWO POINTS COINCIDED\n";
+        return 0;
+    }
+
+    if ((x1*(y2 - y3) + x2*(y3 - y1) + x3*(y1 - y2)) != 0) {
+        cout << "NOT COLLINEAR\n";
+        return 0;
+    }
+
+    cout << "COLLINEAR\n";
+
+    double mx, my;
+
+    double d12 = (x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2);
+    double d23 = (x2 - x3)*(x2 - x3) + (y2 - y3)*(y2 - y3);
+    double d13 = (x1 - x3)*(x1 - x3) + (y1 - y3)*(y1 - y3);
+
+    if ((d12 >= d23) && (d12 >= d13)) {  
+        mx = (x1 + x2 + x3 - x1 - x2);  
+        my = (y1 + y2 + y3 - y1 - y2);  
+    }
+    else if ((d23 >= d12) && (d23 >= d13)) { 
+        mx = (x1 + x2 + x3 - x2 - x3); 
+        my = (y1 + y2 + y3 - y2 - y3); 
+    }
+    else { // 1 and 3 farthest
+        mx = (x1 + x2 + x3 - x1 - x3); 
+        my = (y1 + y2 + y3 - y1 - y3); 
+    }
+
+    cout << "MIDDLE PT: (" << mx << "," << my << ")\n";
+
+    return 0;
+}
