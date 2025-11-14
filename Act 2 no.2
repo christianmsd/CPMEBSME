@@ -1,0 +1,67 @@
+#include <iostream>
+using namespace std;
+
+bool collinear(double x1, double y1, double x2, double y2, double x3, double y3) {
+    return (x1*(y2 - y3) + x2*(y3 - y1) + x3*(y1 - y2)) == 0;
+}
+
+double distSq(double x1, double y1, double x2, double y2) {
+    double dx = x1 - x2;
+    double dy = y1 - y2;
+    return dx*dx + dy*dy;
+}
+
+int main() {
+    double x1, y1, x2, y2, x3, y3;
+
+    cout << "Enter X1 Y1: ";
+    cin >> x1 >> y1;
+    cout << "Enter X2 Y2: ";
+    cin >> x2 >> y2;
+    cout << "Enter X3 Y3: ";
+    cin >> x3 >> y3;
+
+    if (x1 == 0 && y1 == 0 && x2 == 0 && y2 == 0 && x3 == 0 && y3 == 0) {
+        cout << "ORIGIN\n";
+    }
+    else {
+        bool same12 = (x1 == x2 && y1 == y2);
+        bool same23 = (x2 == x3 && y2 == y3);
+        bool same13 = (x1 == x3 && y1 == y3);
+
+        bool allThreeCoincide = same12 && same23;
+        bool twoCoincide = same12 || same23 || same13;
+        bool isCollinear = collinear(x1, y1, x2, y2, x3, y3);
+
+
+        if (allThreeCoincide) {
+            cout << "COLLINEAR\n";
+            cout << "ALL THREE POINTS COINCIDE\n";
+        } 
+        else if (twoCoincide) {
+            cout << "TWO POINTS COINCIDE\n";
+            cout << "Points are COLLINEAR\n";
+        } 
+        else if (!isCollinear) {
+            cout << "NOT COLLINEAR\n";
+        } 
+        else {
+            cout << "COLLINEAR\n";
+
+
+            double total1 = distSq(x1, y1, x2, y2) + distSq(x1, y1, x3, y3);
+            double total2 = distSq(x2, y2, x1, y1) + distSq(x2, y2, x3, y3);
+            double total3 = distSq(x3, y3, x1, y1) + distSq(x3, y3, x2, y2);
+
+            if (total1 <= total2 && total1 <= total3) {
+                cout << "MIDDLE POINT: (" << x1 << ", " << y1 << ")\n";
+            } else if (total2 <= total1 && total2 <= total3) {
+                cout << "MIDDLE POINT: (" << x2 << ", " << y2 << ")\n";
+            } else {
+                cout << "MIDDLE POINT: (" << x3 << ", " << y3 << ")\n";
+            }
+        }
+    }
+
+    return 0;
+}
