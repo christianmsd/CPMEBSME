@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    double x1, y1, x2, y2, x3, y3;
+
+    cout << "Enter X1 Y1: ";
+    cin >> x1 >> y1;
+    cout << "Enter X2 Y2: ";
+    cin >> x2 >> y2;
+    cout << "Enter X3 Y3: ";
+    cin >> x3 >> y3;
+
+    if (x1 == 0 && y1 == 0 &&
+        x2 == 0 && y2 == 0 &&
+        x3 == 0 && y3 == 0) 
+    {
+        cout << "ORIGIN\n";
+        return 0;
+    }
+
+    else if ((x1 == x2 && y1 == y2) && (x2 == x3 && y2 == y3)) {
+        cout << "ALL THREE POINTS COINCIDE\n";
+        cout << "COLLINEAR\n";
+        return 0;
+    }
+
+    else if ((x1 == x2 && y1 == y2) || (x2 == x3 && y2 == y3) || (x1 == x3 && y1 == y3)) {
+        cout << "TWO POINTS COINCIDE\n";
+    }
+
+
+    if ((x1*(y2 - y3) + x2*(y3 - y1) + x3*(y1 - y2)) != 0) {
+        cout << "NOT COLLINEAR\n";
+        return 0;
+    }
+    else {
+        cout << "COLLINEAR\n";
+    }
+
+
+    double ax = x1, ay = y1; // 
+    double bx = x1, by = y1; //
+
+    if (x2 < ax) { ax = x2; ay = y2; }
+    if (x3 < ax) { ax = x3; ay = y3; }
+
+    if (x2 > bx) { bx = x2; by = y2; }
+    if (x3 > bx) { bx = x3; by = y3; }
+
+    double mx = (ax + bx) / 2;
+    double my = (ay + by) / 2;
+
+    // 6. If midpoint is origin
+    if (mx == 0 && my == 0)
+        cout << "MIDDLE PT: ORIGIN\n";
+    else
+        cout << "MIDDLE PT: (" << mx << ", " << my << ")\n";
+
+    return 0;
+}
