@@ -1,0 +1,114 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int month, day, year;
+
+    // Month
+    cout << "Enter month: ";
+    cin >> month;
+
+    cout << "Enter day: ";
+    cin >> day;
+
+    cout << "Enter year: ";
+    cin >> year;
+
+    // Gregorian Calendar
+    if (year <= 1582 && month <= 10 && day < 15) {
+        cout << "INVALID DATE";
+        return 0;
+    }
+    // Month Validity
+    if (month < 1 || month > 12) {
+        cout << "INVALID DATE";
+        return 0; 
+    }
+    
+    // Day
+    int daysinamonth;
+    
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+            
+        daysinamonth = 31;
+        }
+        
+    else if (month == 2 || month == 4 || month == 6 || 
+        month == 9 || month == 11) {
+            
+        daysinamonth = 30;
+        }
+        
+    else{
+        bool leapyear;
+            
+            // Leap Year
+        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+        
+                leapyear = true;
+            else 
+                leapyear = false;
+            
+            if (leapyear) {
+                daysinamonth = 29;
+            } 
+            else {
+            daysinamonth = 28;
+            }
+    }
+    // Day Validity
+    if (day < 1 || day > daysinamonth) {
+        cout << "INVALID DATE";
+        return 0;
+    }
+    
+    // Month
+    string monthname;
+    
+    if (month == 1) monthname = "January";
+    else if (month == 2) monthname = "February";
+    else if (month == 3) monthname = "March";
+    else if (month == 4) monthname = "April";
+    else if (month == 5) monthname = "May";
+    else if (month == 6) monthname = "June";
+    else if (month == 7) monthname = "July";
+    else if (month == 8) monthname = "August";
+    else if (month == 9) monthname = "September";
+    else if (month == 10) monthname = "October";
+    else if (month == 11) monthname = "November";
+    else monthname = "December";
+    
+    cout << monthname << " " << day << ", "<< year << endl;
+    
+    // Zodiac Signs
+    string zodiac;
+    
+    if ((month == 12 && day >= 22) || (month == 1 && day <= 19 ))
+    zodiac = "Capricorn";
+    else if ((month == 1 && day >= 20) || (month == 2 && day <= 18))
+    zodiac = "Aquarius";
+    else if ((month == 2 && day >= 19) || (month == 3 && day <= 20))
+    zodiac = "Pisces";
+    else if ((month == 3 && day >= 21) || (month == 4 && day <= 19))
+    zodiac = "Aries";
+    else if ((month == 4 && day >= 20) || (month == 5 && day <= 20))
+    zodiac = "Taurus";
+    else if ((month == 5 && day >= 21) || (month == 6 && day <= 20))
+    zodiac = "Gemini";
+    else if ((month == 6 && day >= 21) || (month == 7 && day <= 22))
+        zodiac = "Cancer";
+    else if ((month == 7 && day >= 23) || (month == 8 && day <= 22))
+        zodiac = "Leo";
+    else if ((month == 8 && day >= 23) || (month == 9 && day <= 22))
+        zodiac = "Virgo";
+    else if ((month == 9 && day >= 23) || (month == 10 && day <= 22))
+        zodiac = "Libra";
+    else if ((month == 10 && day >= 23) || (month == 11 && day <= 21))
+        zodiac = "Scorpio";
+    else
+        zodiac = "Sagittarius";
+        
+        cout << zodiac << " ka po";
+        
+        return 0;
+}
