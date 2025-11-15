@@ -3,8 +3,9 @@ using namespace std;
 
 int main() {
     int month, day, year;
-
-    // Month
+    float decimalyear;
+    
+    // Input
     cout << "Enter month: ";
     cin >> month;
 
@@ -12,13 +13,23 @@ int main() {
     cin >> day;
 
     cout << "Enter year: ";
-    cin >> year;
-
+    cin >> decimalyear;
+    
+    // Year Decimal
+    year = (decimalyear/1);
+    
+    if(year!=decimalyear) {
+        
+        cout<< "INVALID DATE";
+        return 0;
+    } 
+    
     // Gregorian Calendar
     if (year <= 1582 && month <= 10 && day < 15) {
         cout << "INVALID DATE";
         return 0;
     }
+    
     // Month Validity
     if (month < 1 || month > 12) {
         cout << "INVALID DATE";
