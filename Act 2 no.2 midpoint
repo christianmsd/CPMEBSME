@@ -91,9 +91,9 @@ int main() {
     }
 
     if (mx == 0 && my == 0)
-        cout << "MIDDLE PT: ORIGIN\n";
+        cout << "MID PT: ORIGIN\n";
     else
-        cout << "MIDDLE PT: (" << mx << ", " << my << ")\n";
+        cout << "MID PT: (" << mx << ", " << my << ")\n";
 
     return 0;
 }
