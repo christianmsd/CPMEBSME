@@ -52,7 +52,7 @@ int main() {
         mx = (x1); 
         my = (y1); 
     }
-    else { // 1 and 3 farthest
+    else {
         mx = (x2); 
         my = (y2); 
     }
