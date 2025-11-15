@@ -5,11 +5,14 @@ int main() {
     double x1, y1, x2, y2, x3, y3;
 
     cout << "Enter X1 Y1: ";
-    cin >> x1 >> y1;
+    cin >> x1; 
+    cin >> y1;
     cout << "Enter X2 Y2: ";
-    cin >> x2 >> y2;
+    cin >> x2; 
+    cin >> y2;
     cout << "Enter X3 Y3: ";
-    cin >> x3 >> y3;
+    cin >> x3; 
+    cin >> y3;
 
     if (x1 == 0 && y1 == 0 &&
         x2 == 0 && y2 == 0 &&
@@ -19,39 +22,74 @@ int main() {
         return 0;
     }
 
-    else if ((x1 == x2 && y1 == y2) && (x2 == x3 && y2 == y3)) {
+    if ((x1 == x2 && y1 == y2) &&
+        (x2 == x3 && y2 == y3)) 
+    {
         cout << "ALL THREE POINTS COINCIDE\n";
         cout << "A POINT\n";
         return 0;
     }
 
-    else if ((x1 == x2 && y1 == y2) || (x2 == x3 && y2 == y3) || (x1 == x3 && y1 == y3)) {
+    if ((x1 == x2 && y1 == y2) ||
+        (x2 == x3 && y2 == y3) ||
+        (x1 == x3 && y1 == y3)) 
+    {
         cout << "TWO POINTS COINCIDE\n";
     }
 
+    double det = x1*(y2 - y3) +
+                 x2*(y3 - y1) +
+                 x3*(y1 - y2);
 
-    if ((x1*(y2 - y3) + x2*(y3 - y1) + x3*(y1 - y2)) != 0) {
+    if (det != 0) {
         cout << "NOT COLLINEAR\n";
         return 0;
     }
-    else {
-        cout << "COLLINEAR\n";
+
+    cout << "COLLINEAR\n";
+
+    double mx, my;
+
+    if (x1 == x2 && x2 == x3) {
+        double minY = y1, maxY = y1;
+
+        if (y2 < minY) minY = y2;
+        else if (y3 < minY) minY = y3;
+
+        if (y2 > maxY) maxY = y2;
+        else if (y3 > maxY) maxY = y3;
+
+        mx = x1;
+        my = (minY + maxY) / 2;
     }
 
+    else if (y1 == y2 && y2 == y3) {
+        double minX = x1, maxX = x1;
 
-    double ax = x1, ay = y1; // 
-    double bx = x1, by = y1; //
+        if (x2 < minX) minX = x2;
+        if (x3 < minX) minX = x3;
 
-    if (x2 < ax) { ax = x2; ay = y2; }
-    if (x3 < ax) { ax = x3; ay = y3; }
+        if (x2 > maxX) maxX = x2;
+        if (x3 > maxX) maxX = x3;
 
-    if (x2 > bx) { bx = x2; by = y2; }
-    if (x3 > bx) { bx = x3; by = y3; }
+        mx = (minX + maxX) / 2;
+        my = y1;
+    }
 
-    double mx = (ax + bx) / 2;
-    double my = (ay + by) / 2;
+    else {
+        double minX = x1, minY = y1;
+        double maxX = x1, maxY = y1;
 
-    // 6. If midpoint is origin
+        if (x2 < minX) { minX = x2; minY = y2; }
+        if (x3 < minX) { minX = x3; minY = y3; }
+
+        if (x2 > maxX) { maxX = x2; maxY = y2; }
+        if (x3 > maxX) { maxX = x3; maxY = y3; }
+
+        mx = (minX + maxX) / 2;
+        my = (minY + maxY) / 2;
+    }
+
     if (mx == 0 && my == 0)
         cout << "MIDDLE PT: ORIGIN\n";
     else
