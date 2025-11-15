@@ -23,9 +23,6 @@ int main() {
         return 0;
     }
     
-    else 
-        cout << "COLLINEAR\n";
-    
     if (x1 == 0 && y1 == 0 &&
         x2 == 0 && y2 == 0 &&
         x3 == 0 && y3 == 0) 
@@ -49,7 +46,9 @@ int main() {
     {
         cout << "TWO POINTS COINCIDE\n";
     }
-
+    else
+        cout << "COLLINEAR\n";
+        
     double mx, my;
 
     if (x1 == x2 && x2 == x3) {
