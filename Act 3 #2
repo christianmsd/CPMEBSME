@@ -1,0 +1,75 @@
+#include <iostream>
+#include <cstdlib> // for system("pause") and system("cls")
+using namespace std;
+
+int main() {
+    int action;
+    double balance = 1000; // starting balance
+    double amount;
+
+    do {
+        system("cls");
+
+        cout << "------------------------------------\n";
+        cout << "|        GCASH MODDED APK          |\n";
+        cout << "|         (unlimited money)        |\n";
+        cout << "------------------------------------\n";
+        cout << "[1] Deposit\n";
+        cout << "[2] Withdraw\n";
+        cout << "[3] Check Balance\n";
+        cout << "[4] Exit\n";
+        cout << "-----------------------------------\n";
+        cout << "      Enter your action:";
+        cin >> action;
+
+        system("cls");
+
+        if (action == 1) {
+            // Deposit
+            cout << "Enter amount to deposit: ";
+            cin >> amount;
+
+            if (amount <= 0) {
+                cout << "Invalid amount! Deposit must be positive.\n";
+            } else {
+                balance += amount;
+                cout << "Successfully deposited PHP " << amount << endl;
+            }
+        }
+        else if (action == 2) {
+            // Withdraw
+            cout << "Enter amount to withdraw (multiples of 100): ";
+            cin >> amount;
+
+            if (amount <= 0) {
+                cout << "Invalid amount!\n";
+            }
+            else if ((int)amount % 100 != 0) {
+                cout << "Withdrawal must be in multiples of PHP 100!\n";
+            }
+            else if (balance - amount < 0) {
+                cout << "Cannot withdraw! You're broke!\n";
+            }
+            else {
+                balance -= amount;
+                cout << "Successfully withdrawn PHP " << amount << endl;
+            }
+        }
+        else if (action == 3) {
+            // Check Balance
+            cout << "Your current balance is: PHP " << balance << endl;
+        }
+        else if (action == 4) {
+            cout << "Thank you for your money!\n";
+        }
+        else {
+            cout << "Invalid action! Try again.\n";
+        }
+
+        cout << endl;
+        system("pause");
+
+    } while (action != 4);
+
+    return 0;
+}
