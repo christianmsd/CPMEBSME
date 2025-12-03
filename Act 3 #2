@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-    int action;
+    double action;
     double balance = 1000; // starting balance
     double amount;
 
@@ -48,7 +48,7 @@ int main() {
                 cout << "Withdrawal must be in multiples of PHP 100!\n";
             }
             else if (balance - amount < 0) {
-                cout << "Cannot withdraw! You're broke!\n";
+                cout << "Cannot withdraw! You're broke!!\n";
             }
             else {
                 balance -= amount;
