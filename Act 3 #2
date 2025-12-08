@@ -1,10 +1,11 @@
 #include <iostream>
-#include <cstdlib> // for system("pause") and system("cls")
+#include <cstdlib>
+#include <iomanip>
 using namespace std;
 
 int main() {
     double action;
-    double balance = 1000; // starting balance
+    double balance = 1000;
     double amount;
 
     do {
@@ -19,7 +20,7 @@ int main() {
         cout << "[3] Check Balance\n";
         cout << "[4] Exit\n";
         cout << "-----------------------------------\n";
-        cout << "      Enter your action:";
+        cout << "      Enter your action: ";
         cin >> action;
 
         system("cls");
@@ -30,10 +31,10 @@ int main() {
             cin >> amount;
 
             if (amount <= 0) {
-                cout << "Invalid amount! Deposit must be positive.\n";
+                cout << "Invalid amount! Are you broke?!.\n";
             } else {
                 balance += amount;
-                cout << "Successfully deposited PHP " << amount << endl;
+                cout << "Successfully deposited PHP " << fixed << setprecision(0) << amount << endl;
             }
         }
         else if (action == 2) {
@@ -41,8 +42,16 @@ int main() {
             cout << "Enter amount to withdraw (multiples of 100): ";
             cin >> amount;
 
+            if (amount >= 10000000000) {
+                cout << "Withdrawal limit for cash is only below PHP 10,000,000,000.00\n";
+
+                return 0;
+            }
             if (amount <= 0) {
                 cout << "Invalid amount!\n";
+            }
+            else if (amount != (int)amount) {
+                    cout << "Amount must be a whole number! No decimals allowed.\n";
             }
             else if ((int)amount % 100 != 0) {
                 cout << "Withdrawal must be in multiples of PHP 100!\n";
