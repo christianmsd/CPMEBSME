@@ -32,7 +32,8 @@ int main() {
 
             if (amount <= 0) {
                 cout << "Invalid amount! Are you broke?!.\n";
-            } else {
+            } 
+            else {
                 balance += amount;
                 cout << "Successfully deposited PHP " << fixed << setprecision(0) << amount << endl;
             }
