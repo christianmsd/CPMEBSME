@@ -40,7 +40,7 @@ int main() {
         }
         else if (action == 2) {
             // Withdraw
-            cout << "Enter amount to withdraw (multiples of 100): ";
+            cout << "Enter amount to withdraw (only dispenses PHP 100 bills): ";
             cin >> amount;
 
             if (amount >= 10000000000) {
