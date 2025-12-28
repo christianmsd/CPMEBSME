@@ -1,0 +1,71 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+using namespace std;
+
+// Check if string is integer (no decimals)
+int isInteger(const string &s) {
+    int start = 0;
+    if (s[0] == '-' || s[0] == '+') start = 1;
+    for (int i = start; i < s.length(); i++) {
+        if (!isdigit(s[i])) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    string sA, sB;
+    cout << "Input dividend: ";
+    cin >> sA;
+    cout << "Input divisor: ";
+    cin >> sB;
+
+    // Reject decimal input
+    for (char c : sA) if (c == '.' || c == ',') { cout << "Remainder: Invalid"; return 0; }
+    for (char c : sB) if (c == '.' || c == ',') { cout << "Remainder: Invalid"; return 0; }
+
+    // Check valid integer strings
+    if (!isInteger(sA) || !isInteger(sB)) {
+        cout << "Remainder: Invalid"; 
+        return 0;
+    }
+
+    // Handle signed zeros (+0 or -0) → Invalid immediately
+    string signedZeros[] = {"+0", "-0"};
+    for (int i = 0; i < 2; i++) {
+        if (sA == signedZeros[i] || sB == signedZeros[i]) {
+            cout << "Remainder: Invalid";
+            return 0;
+        }
+    }
+
+    // Handle 0 / 0 → Indeterminate
+    if (sA == "0" && sB == "0") {
+        cout << "Remainder: Indeterminate";
+        return 0;
+    }
+
+    // Handle any number / 0 (unsigned) → Undefined
+    if (sB == "0") {
+        cout << "Remainder: Undefined";
+        return 0;
+    }
+
+    // Convert to integers
+    int A = stoi(sA);
+    int B = stoi(sB);
+
+    // Compute remainder without / or %
+    if (A > 0 && B > 0) {
+        while (A >= B) A -= B;
+    } else if (A < 0 && B > 0) {
+        while (A <= -B) A += B;
+    } else if (A > 0 && B < 0) {
+        while (A >= -B) A += B;
+    } else if (A < 0 && B < 0) {
+        while (A <= B) A -= B;
+    }
+
+    cout << "Remainder: " << A;
+    return 0;
+}
