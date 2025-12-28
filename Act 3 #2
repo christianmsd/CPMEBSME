@@ -23,12 +23,24 @@ int main() {
         cout << "      Enter your action: ";
         cin >> action;
 
+        if (cin.fail()) {
+                cin.clear();
+                cin.ignore(1000, '\n');
+                cout << "Invalid action! Try again.\n";
+        }
+
         system("cls");
 
         if (action == 1) {
             // Deposit
             cout << "Enter amount to deposit: ";
             cin >> amount;
+
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore(1000, '\n');
+                cout << "Invalid action! Try again.\n";
+            }
 
             if (amount <= 0) {
                 cout << "Invalid amount! Are you broke?!.\n";
@@ -43,12 +55,15 @@ int main() {
             cout << "Enter amount to withdraw (only dispenses PHP 100 bills): ";
             cin >> amount;
 
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore(1000, '\n');
+                cout << "Invalid action! Try again.\n";
+            }
             if (amount >= 10000000000) {
                 cout << "Withdrawal limit for cash is only below PHP 10,000,000,000.00. Are you from DPWH???!\n";
-                system("pause");
-                continue;
             }
-            if (amount <= 0) {
+            else if (amount <= 0) {
                 cout << "Invalid amount!\n";
             }
             else if (amount != (int)amount) {
@@ -79,7 +94,9 @@ int main() {
         cout << endl;
         system("pause");
 
-    } while (action != 4);
+    }
+    while (action != 4);
 
     return 0;
 }
+
