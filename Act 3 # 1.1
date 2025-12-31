@@ -3,67 +3,129 @@
 #include <cctype>
 using namespace std;
 
-// Check if string is integer (no decimals)
-int isInteger(const string &s) {
-    int start = 0;
-    if (s[0] == '-' || s[0] == '+') start = 1;
-    for (int i = start; i < s.length(); i++) {
-        if (!isdigit(s[i])) return 0;
-    }
-    return 1;
-}
-
 int main() {
-    string sA, sB;
-    cout << "Input dividend: ";
-    cin >> sA;
-    cout << "Input divisor: ";
-    cin >> sB;
+    string tryAgain;
 
-    // Reject decimal input
-    for (char c : sA) if (c == '.' || c == ',') { cout << "Remainder: Invalid"; return 0; }
-    for (char c : sB) if (c == '.' || c == ',') { cout << "Remainder: Invalid"; return 0; }
+    do {
+        string sA, sB;
+        bool invalidInput = false;    // Tracks if the input is invalid
+        bool outputPrinted = false;   // Tracks if we already printed a message
 
-    // Check valid integer strings
-    if (!isInteger(sA) || !isInteger(sB)) {
-        cout << "Remainder: Invalid"; 
-        return 0;
-    }
+        cout << "Input dividend: ";
+        cin >> sA;
+        cout << "Input divisor: ";
+        cin >> sB;
 
-    // Handle signed zeros (+0 or -0) → Invalid immediately
-    if (sA == "+0" || sA == "-0" || sB == "+0" || sB == "-0") {
-        cout << "Remainder: Invalid";
-        return 0;
-    }
+        // ----------- Check for decimals in sA ----------
+        int dotPos = -1;
+        for (int i = 0; i < sA.length(); i++) {
+            if (sA[i] == '.' || sA[i] == ',') {
+                dotPos = i;
+                break;
+            }
+        }
+        if (dotPos != -1) {
+            for (int i = dotPos + 1; i < sA.length(); i++) {
+                if (sA[i] != '0') {
+                    cout << "Remainder: Invalid\n";
+                    outputPrinted = true;
+                    invalidInput = true;
+                    break;
+                }
+            }
+            sA = sA.substr(0, dotPos);
+        }
 
-    // Handle 0 / 0 → Indeterminate
-    if (sA == "0" && sB == "0") {
-        cout << "Remainder: Indeterminate";
-        return 0;
-    }
+        // ----------- Check for decimals in sB ----------
+        dotPos = -1;
+        for (int i = 0; i < sB.length(); i++) {
+            if (sB[i] == '.' || sB[i] == ',') {
+                dotPos = i;
+                break;
+            }
+        }
+        if (dotPos != -1) {
+            for (int i = dotPos + 1; i < sB.length(); i++) {
+                if (sB[i] != '0') {
+                    cout << "Remainder: Invalid\n";
+                    outputPrinted = true;
+                    invalidInput = true;
+                    break;
+                }
+            }
+            sB = sB.substr(0, dotPos);
+        }
 
-    // Handle any number / 0 (unsigned) → Undefined
-    if (sB == "0") {
-        cout << "Remainder: Undefined";
-        return 0;
-    }
+        // ----------- Check for invalid characters ----------
+        for (int i = 0; i < sA.length() && !invalidInput; i++) {
+            if (!isdigit(sA[i]) && !(i == 0 && (sA[i] == '+' || sA[i] == '-'))) {
+                invalidInput = true;
+                outputPrinted = true;
+                cout << "Remainder: Invalid\n";
+            }
+        }
+        for (int i = 0; i < sB.length() && !invalidInput; i++) {
+            if (!isdigit(sB[i]) && !(i == 0 && (sB[i] == '+' || sB[i] == '-'))) {
+                invalidInput = true;
+                outputPrinted = true;
+                cout << "Remainder: Invalid\n";
+            }
+        }
 
-    // Convert to integers
-    int A = stoi(sA);
-    int B = stoi(sB);
+        // ----------- Handle signed zeros ----------
+        if (!invalidInput && (sA == "+0" || sA == "-0" || sB == "+0" || sB == "-0")) {
+            invalidInput = true;
+            outputPrinted = true;
+            cout << "Remainder: Invalid\n";
+        }
 
-    // Compute remainder without / or %
-    if (A > 0 && B > 0) {
-        while (A >= B) A -= B;
-    } else if (A < 0 && B > 0) {
-        while (A <= -B) A += B;
-    } else if (A > 0 && B < 0) {
-        while (A >= -B) A += B;
-    } else if (A < 0 && B < 0) {
-        while (A <= B) A -= B;
-    }
+        // ----------- Handle 0 / 0 → Indeterminate ----------
+        if (!invalidInput && sA == "0" && sB == "0") {
+            outputPrinted = true;
+            cout << "Remainder: Indeterminate\n";
+            invalidInput = true;
+        }
 
-    cout << "Remainder: " << A;
+        // ----------- Handle number / 0 → Undefined ----------
+        if (!invalidInput && sB == "0") {
+            outputPrinted = true;
+            cout << "Remainder: Undefined\n";
+            invalidInput = true;
+        }
+
+        // ----------- Compute remainder if input is valid ----------
+        if (!invalidInput && !outputPrinted) {
+            int A = stoi(sA);
+            int B = stoi(sB);
+
+            if (A > 0 && B > 0) {
+                while (A >= B) A -= B;
+            } else if (A < 0 && B > 0) {
+                while (A <= -B) A += B;
+            } else if (A > 0 && B < 0) {
+                while (A >= -B) A += B;
+            } else if (A < 0 && B < 0) {
+                while (A <= B) A -= B;
+            }
+
+            cout << "Remainder: " << A << "\n";
+        }
+
+        // ----------- Ask to try again (must be exactly 'y' or 'n') ----------
+        do {
+            cout << "Do you want to try again? (y/n): ";
+            cin >> tryAgain;
+
+            if (tryAgain != "y" && tryAgain != "n") {
+                cout << "Invalid input. Please enter 'y' or 'n'.\n";
+            }
+        } while (tryAgain != "y" && tryAgain != "n");
+
+        cout << "\n";
+
+    } while (tryAgain == "y");
+
+    cout << "Program ended.\n";
     return 0;
 }
 
