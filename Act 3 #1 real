@@ -1,0 +1,105 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+bool isInteger(double x) {
+    return x == floor(x);
+}
+
+int main() {
+    string tryAgain;
+
+    do {
+        system("cls");
+
+        double dividend = 0, divisor = 0;
+        bool invalidInput = false;
+
+        cout << "Input dividend: ";
+        cin >> dividend;
+
+        cout << "Input divisor: ";
+        cin >> divisor;
+
+        if (cin.fail() || !isInteger(dividend) || !isInteger(divisor)) {
+            invalidInput = true;
+        }
+
+        cin.clear();
+        cin.ignore(1000, '\n');
+
+        if (!invalidInput) {
+            if ((dividend == 0.0 && copysign(1.0, dividend) != 0.0) ||
+                (divisor == 0.0 && copysign(1.0, divisor) != 0.0)) {
+                invalidInput = true;
+            }
+        }
+
+        if (!invalidInput && dividend == 0.0 && divisor == 0.0) {
+            cout << "Remainder: Indeterminate\n";
+            invalidInput = true;
+        } else if (!invalidInput && divisor == 0.0) {
+            cout << "Remainder: Undefined\n";
+            invalidInput = true;
+        }
+
+        if (invalidInput) {
+            cout << "Remainder: Invalid\n";
+        }
+
+        if (!invalidInput) {
+            int A = static_cast<int>(dividend);
+            int B = static_cast<int>(divisor);
+
+            // CASE 1: A >= 0, B >= 0
+            if (A >= 0 && B >= 0) {
+                while (A >= B && B != 0) {
+                    A = A - B;
+                }
+                cout << "Remainder: " << A << "\n";
+            }
+
+            // CASE 2: A < 0, B > 0
+            else if (A < 0 && B > 0) {
+                int C = -B;
+                while (A <= C) {
+                    A = A + B;
+                }
+                cout << "Remainder: " << A << "\n";
+            }
+
+            // CASE 3: A >= 0, B < 0
+            else if (A >= 0 && B < 0) {
+                int C = -B;
+                while (A >= C) {
+                    A = A + B;
+                }
+                cout << "Remainder: " << (A * -1) << "\n";
+            }
+
+            // CASE 4: A < 0, B < 0
+            else if (A < 0 && B < 0) {
+                while (A <= B) {
+                    A = A - B;
+                }
+                cout << "Remainder: " << A << "\n";
+            }
+        }
+
+        // ---------- Pause ----------
+        system("pause");
+
+        // ---------- Ask to try again ----------
+        while (true) {
+            cout << "Do you want to try again? (y/n): ";
+            getline(cin, tryAgain);
+
+            if (tryAgain == "y" || tryAgain == "n") break;
+            cout << "Invalid input. Please enter exactly 'y' or 'n'.\n";
+        }
+
+    } while (tryAgain == "y");
+
+    cout << "Program ended.\n";
+    return 0;
+}
