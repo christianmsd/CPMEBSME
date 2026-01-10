@@ -1,94 +1,125 @@
 #include <iostream>
-#include <cmath>
+#include <string>
+#include <cstdlib>
 using namespace std;
 
-bool isInteger(double x) {
-    return x == floor(x);
-}
-
 int main() {
-    string tryAgain;
+    string tryAgain = "y";
 
     do {
         system("cls");
 
-        double dividend = 0, divisor = 0;
-        bool invalidInput = false;
+        int intA, intB;
+        double A = 0, B = 0;
+        char signA, signB;
+        bool invalid = false;
 
         cout << "Input dividend: ";
-        cin >> dividend;
-        if (cin.fail()) {
+        signA = cin.peek();
+
+        if (cin >> intA) {
+            if (cin.peek() == '.') {
+                char decimalPoint;
+                cin >> decimalPoint;
+                int decimalDigits = 0;
+                while (cin.peek() >= '0' && cin.peek() <= '9') {
+                    char digit;
+                    cin >> digit;
+                    if (digit != '0') {
+                        decimalDigits++;
+                    }
+                }
+                if (decimalDigits > 0) {
+                    cout << "Input Invalid\n";
+                    invalid = true;
+                }
+                cin.ignore(10000, '\n');
+                A = intA;
+            }
+            else if (intA == 0 && (signA == '+' || signA == '-')) {
+                cout << "Input Invalid\n";
+                cin.ignore(10000, '\n');
+                invalid = true;
+            }
+            else {
+                cin.ignore(10000, '\n');
+                A = intA;
+            }
+        }
+        else {
+            cout << "Input Invalid\n";
             cin.clear();
-            cin.ignore(1000, '\n');
-            invalidInput = true;
+            cin.ignore(10000, '\n');
+            invalid = true;
         }
 
-        if (!invalidInput) {
+        if (!invalid) {
             cout << "Input divisor: ";
-            cin >> divisor;
-            if (cin.fail()) {
+            signB = cin.peek();
+
+            if (cin >> intB) {
+                if (cin.peek() == '.') {
+                    char decimalPoint;
+                    cin >> decimalPoint;
+                    int decimalDigits = 0;
+                    while (cin.peek() >= '0' && cin.peek() <= '9') {
+                        char digit;
+                        cin >> digit;
+                        if (digit != '0') {
+                            decimalDigits++;
+                        }
+                    }
+                    if (decimalDigits > 0) {
+                        cout << "Input Invalid\n";
+                        invalid = true;
+                    }
+                    cin.ignore(10000, '\n');
+                    B = intB;
+                }
+                else if (intB == 0 && (signB == '+' || signB == '-')) {
+                    cout << "Input Invalid\n";
+                    cin.ignore(10000, '\n');
+                    invalid = true;
+                }
+                else {
+                    cin.ignore(10000, '\n');
+                    B = intB;
+                }
+            }
+            else {
+                cout << "Input Invalid\n";
                 cin.clear();
-                cin.ignore(1000, '\n');
-                invalidInput = true;
+                cin.ignore(10000, '\n');
+                invalid = true;
             }
         }
 
-        cin.clear();
-        cin.ignore(1000, '\n');
-
-        if (!invalidInput) {
-            if ((dividend == 0.0 && copysign(1.0, dividend) != 0.0) ||
-                (divisor == 0.0 && copysign(1.0, divisor) != 0.0)) {
-                invalidInput = true;
+        if (!invalid) {
+            if (A == 0 && B == 0) {
+                cout << "Remainder: Indeterminate\n";
+            }
+            else if (B == 0) {
+                cout << "Remainder: Undefined\n";
+            }
+            else if (A >= 0 && B > 0) {
+                while (A >= B) A -= B;
+                cout << "Remainder: " << A << endl;
+            }
+            else if (A < 0 && B > 0) {
+                double C = -B;
+                while (A <= C) A += B;
+                cout << "Remainder: " << A << endl;
+            }
+            else if (A >= 0 && B < 0) {
+                double C = -B;
+                while (A >= C) A += B;
+                cout << "Remainder: " << A * -1 << endl;
+            }
+            else if (A < 0 && B < 0) {
+                while (A <= B) A -= B;
+                cout << "Remainder: " << A << endl;
             }
         }
-
-        if (!invalidInput && (!isInteger(dividend) || !isInteger(divisor))) {
-            invalidInput = true;
-        }
-
-        if (!invalidInput && dividend == 0.0 && divisor == 0.0) {
-            cout << "Remainder: Indeterminate\n";
-            invalidInput = true;
-        } else if (!invalidInput && divisor == 0.0) {
-            cout << "Remainder: Undefined\n";
-            invalidInput = true;
-        }
-
-        if (invalidInput) {
-            cout << "Remainder: Invalid\n";
-        }
-
-        if (!invalidInput) {
-            int A = static_cast<int>(dividend);
-            int B = static_cast<int>(divisor);
-
-            if (A >= 0 && B >= 0) {
-                while (A >= B && B != 0) {
-                    A = A - B;
-                }
-                cout << "Remainder: " << A << "\n";
-            } else if (A < 0 && B > 0) {
-                int C = -B;
-                while (A <= C) {
-                    A = A + B;
-                }
-                cout << "Remainder: " << A << "\n";
-            } else if (A >= 0 && B < 0) {
-                int C = -B;
-                while (A >= C) {
-                    A = A + B;
-                }
-                cout << "Remainder: " << (A * -1) << "\n";
-            } else if (A < 0 && B < 0) {
-                while (A <= B) {
-                    A = A - B;
-                }
-                cout << "Remainder: " << A << "\n";
-            }
-        }
-
-        system("pause");
 
         while (true) {
             cout << "Do you want to try again? (y/n): ";
